@@ -1,0 +1,283 @@
+openapi: "3.0.3"
+info:
+  title: "cirno-phi-chart-snapshot API"
+  description: "The OpenAPI documentation of cirno-phi-chart-snapshot"
+  version: "0.1.0"
+  contact:
+    name: "nofyso"
+    email: "ccirno@qq.com"
+servers:
+  - url: "http://localhost:8080"
+paths:
+  /v1/snapshot:
+    get:
+      tags:
+        - snapshot
+      description: "Generate a snapshot"
+      parameters:
+        - name: "id"
+          in: query
+          description: "The id of the song, random if none"
+          schema:
+            type: string
+            example: "Glaciaxion.SunsetRay"
+        - name: "difficulty"
+          in: query
+          description: "The difficulty of the song, random if none"
+          schema:
+            type: string
+            enum:
+              - EZ
+              - HD
+              - IN
+              - AT
+        - name: "time"
+          in: query
+          description: "Target time in second, random if none"
+          schema:
+            type: number
+        - name: "showCombo"
+          in: query
+          description: "Whether show combo on the top, true if none"
+          schema:
+            type: boolean
+            example: true
+        - name: "showScore"
+          in: query
+          description: "Whether show score on the right-top, true if none"
+          schema:
+            type: boolean
+            example: true
+        - name: "showDifficulty"
+          in: query
+          description: "Whether show combo on the right-bottom, true if none"
+          schema:
+            type: boolean
+            example: true
+        - name: "showChartName"
+          in: query
+          description: "Whether show chart name on the left-bottom, true if none"
+          schema:
+            type: boolean
+            example: true
+        - name: "showHitEffect"
+          in: query
+          description: "Whether show hit effect, true if none"
+          schema:
+            type: boolean
+            example: true
+        - name: "showIllustration"
+          in: query
+          description: "Whether show illustration, true if none"
+          schema:
+            type: boolean
+            example: true
+        - name: "showCopyright"
+          in: query
+          description: "Whether show repo info on the bottom, true if none"
+          schema:
+            type: boolean
+            example: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RenderResultSuccess"
+        "400":
+          description: "Failed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RenderResultFailed"
+  /v1/snapshotRaw:
+    get:
+      tags:
+        - snapshot
+      description: "Generate a snapshot without other information except a raw picture"
+      parameters:
+        - name: "id"
+          in: query
+          description: "The id of the song, random if none"
+          schema:
+            type: string
+            example: "Glaciaxion.SunsetRay"
+        - name: "difficulty"
+          in: query
+          description: "The difficulty of the song, random if none"
+          schema:
+            type: string
+            enum:
+              - EZ
+              - HD
+              - IN
+              - AT
+        - name: "time"
+          in: query
+          description: "Target time in second, random if none"
+          schema:
+            type: number
+        - name: "showCombo"
+          in: query
+          description: "Whether show combo on the top, true if none"
+          schema:
+            type: boolean
+            example: true
+        - name: "showScore"
+          in: query
+          description: "Whether show score on the right-top, true if none"
+          schema:
+            type: boolean
+            example: true
+        - name: "showDifficulty"
+          in: query
+          description: "Whether show combo on the right-bottom, true if none"
+          schema:
+            type: boolean
+            example: true
+        - name: "showChartName"
+          in: query
+          description: "Whether show chart name on the left-bottom, true if none"
+          schema:
+            type: boolean
+            example: true
+        - name: "showHitEffect"
+          in: query
+          description: "Whether show hit effect, true if none"
+          schema:
+            type: boolean
+            example: true
+        - name: "showIllustration"
+          in: query
+          description: "Whether show illustration, true if none"
+          schema:
+            type: boolean
+            example: true
+        - name: "showCopyright"
+          in: query
+          description: "Whether show repo info on the bottom, true if none"
+          schema:
+            type: boolean
+            example: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            image/png:
+              schema:
+                type: string
+                format: binary
+        "400":
+          description: "Failed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RenderResultFailed"
+        "406":
+          description: "Failed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RenderResultFailed"
+  /v1/version:
+    get:
+      tags:
+        - other
+      description: "The version info"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VersionInfo"
+
+components:
+  schemas:
+    VersionInfo:
+      type: object
+      properties:
+        name:
+          type: string
+          description: "Name of the API"
+          example: "cirno-phi-chart-snapshot"
+        version:
+          type: string
+          description: "The string version"
+          example: "0.1.0"
+        code:
+          type: integer
+          description: "The version code"
+          example: 1
+        note:
+          type: string
+          description: "Other note"
+    RenderResultFailed:
+      type: object
+      properties:
+        errorCode:
+          type: integer
+          description: "The error code"
+          enum:
+            - -2
+            - -3
+        errorMessage:
+          type: string
+          description: "The messages of error"
+    RenderResultSuccess:
+      type: object
+      properties:
+        errorCode:
+          type: integer
+          description: "Always zero if success"
+          enum:
+            - 0
+        songInfo:
+          $ref: "#/components/schemas/ReturnSongInfo"
+        timeInSecond:
+          type: number
+          description: "The current time of snapshot, in second"
+          example: 114.514
+        picture:
+          type: string
+          description: "Base64 of the picture"
+    DifficultyInfo:
+      type: object
+      description: "The difficulty info contains levels"
+      properties:
+        ezDifficulty:
+          type: number
+          example: 1.0
+        hdDifficulty:
+          type: number
+          example: 6.5
+        inDifficulty:
+          type: number
+          example: 12.6
+        atDifficulty:
+          type: number
+          description: "Note: if there's no AT level, it's 0.0"
+          example: 0.0
+    ReturnSongInfo:
+      type: object
+      description: "The song info (without path information)"
+      properties:
+        id:
+          type: string
+          description: "The song id"
+          example: "Glaciaxion.SunsetRay"
+        name:
+          type: string
+          description: "The name of the song"
+          example: "Glaciaxion"
+        author:
+          type: string
+          description: "The author/composer of the song"
+          example: "SunsetRay"
+        illustrator:
+          type: string
+          description: "The illustrator of the song"
+          example: "艾若拉"
+        difficulties:
+          $ref: "#/components/schemas/DifficultyInfo"

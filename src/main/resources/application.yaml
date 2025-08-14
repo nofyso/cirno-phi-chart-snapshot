@@ -1,0 +1,6 @@
+ktor:
+  application:
+    modules:
+      - han.cirno.ApplicationKt.module
+  deployment:
+    port: 8080
