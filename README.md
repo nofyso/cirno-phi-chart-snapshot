@@ -39,4 +39,4 @@ If the server starts successfully, you'll see the following output:
 ### Using GitHub Action
 
 To get build from GitHub Action, open Action view (fork if necessary), run "Build fat jar", then download
-the artifact
+the artifact. By the way, a build action may start when this repo is just forked.  
