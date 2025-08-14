@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "han.cirno"
-version = "0.0.1"
+version = "0.1.0"
 
 application {
     mainClass = "io.ktor.server.netty.EngineMain"
