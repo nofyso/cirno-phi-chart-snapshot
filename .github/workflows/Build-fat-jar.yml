@@ -15,8 +15,6 @@ jobs:
         uses: gradle/gradle-build-action@v2
         with:
           gradle-version: 8.14.3
-      - name: Test connection to Gradle
-        run: curl -v https://services.gradle.org/distributions/gradle-8.14.3-bin.zip
       - name: Run build with Gradle Wrapper
         run: gradle build
       - name: Cache Gradle
