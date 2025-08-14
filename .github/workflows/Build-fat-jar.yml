@@ -10,7 +10,7 @@ jobs:
       - name: Checkout project sources
         uses: actions/checkout@v2
       - name: Setting up gradlew
-      - run: "chmod +x ./gradlew"
+        run: "chmod +x ./gradlew"
       - name: Test connection to Gradle
         run: curl -v https://services.gradle.org/distributions/gradle-8.14.3-bin.zip
       - name: Setup Gradle
