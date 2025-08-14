@@ -1,6 +1,7 @@
 name: Build fat jar
 
 on:
+  push:
 
 jobs:
   build-fat-jar:
