@@ -1,6 +1,6 @@
 name: Build fat jar
 run-name: ${{ github.actor }} Fork build
-on: [fork]
+on: [fork,workflow_dispatch]
 
 jobs:
   build-fat-jar:
